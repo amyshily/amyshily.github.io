@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Theme switch style options</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Playpen+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #a88fd6;
+      --accent-soft: #eee5f8;
+      --text: #4f3f57;
+      --border: #e4d9ec;
+      --nav: rgba(244, 238, 251, 0.95);
+    }
+    :root.demo-dark-root {
+      --accent: #cfb6ff;
+      --accent-soft: #453160;
+      --text: #f4edff;
+      --border: #665481;
+      --nav: rgba(24, 17, 36, 0.92);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Patrick Hand', 'Playpen Sans', system-ui, sans-serif;
+      color: var(--text);
+      background: linear-gradient(160deg, #f1e8fb 0%, #e7dbf4 100%);
+      min-height: 100vh;
+      padding: 2rem 1.25rem 3rem;
+    }
+    body.demo-dark-page {
+      background: linear-gradient(160deg, #181124 0%, #261b39 100%);
+    }
+
+    h1 {
+      font-family: 'Playpen Sans', system-ui, sans-serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin: 0 0 0.35rem;
+    }
+    .lede {
+      max-width: 42rem;
+      margin: 0 0 1.75rem;
+      opacity: 0.88;
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+    .page-toggle {
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .page-toggle button {
+      font: inherit;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--nav);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .page-toggle button:hover {
+      border-color: var(--accent);
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+      max-width: 720px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem 1.1rem 1.15rem;
+      background: color-mix(in srgb, var(--nav) 88%, transparent);
+      backdrop-filter: blur(8px);
+    }
+    .card h2 {
+      font-family: 'Playpen Sans', system-ui, sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 0 0 0.35rem;
+      letter-spacing: 0.02em;
+    }
+    .card p {
+      margin: 0 0 1rem;
+      font-size: 0.92rem;
+      opacity: 0.85;
+      line-height: 1.45;
+    }
+
+    .compare {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .strip {
+      flex: 1;
+      min-width: 140px;
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+    }
+    .strip span {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.65;
+      margin-right: 0.65rem;
+    }
+
+    /* ---------- A: Segmented pill ---------- */
+    .sw-a {
+      position: relative;
+      display: flex;
+      width: 5.5rem;
+      height: 1.65rem;
+      border-radius: 999px;
+      padding: 3px;
+      background: color-mix(in srgb, var(--border) 55%, transparent);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
+    }
+    .sw-a::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 4px;
+      width: calc(50% - 6px);
+      height: calc(100% - 6px);
+      border-radius: 999px;
+      background: linear-gradient(180deg, #fff 0%, var(--accent-soft) 100%);
+      border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+      box-shadow: 0 2px 6px rgba(80, 60, 120, 0.2);
+      transition: left 0.28s cubic-bezier(0.34, 1.2, 0.64, 1);
+      z-index: 0;
+    }
+    .strip-dark .sw-a::after {
+      left: calc(100% - 4px - (50% - 6px));
+    }
+    .sw-a .lbl {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 600;
+      opacity: 0.45;
+      user-select: none;
+    }
+    .strip-light .sw-a .lbl:first-child { opacity: 1; color: var(--text); }
+    .strip-dark .sw-a .lbl:last-child { opacity: 1; color: var(--text); }
+    .strip-dark .sw-a .lbl:first-child { opacity: 0.4; }
+    .strip-light .sw-a .lbl:last-child { opacity: 0.4; }
+
+    /* ---------- B: Sun / moon slider ---------- */
+    .sw-b {
+      position: relative;
+      width: 3.35rem;
+      height: 1.55rem;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255, 213, 120, 0.35), rgba(120, 100, 180, 0.2));
+      border: 1px solid var(--border);
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .strip-dark .sw-b {
+      background: linear-gradient(90deg, rgba(80, 70, 120, 0.4), rgba(30, 24, 50, 0.9));
+    }
+    .sw-b .thumb {
+      position: absolute;
+      top: 3px;
+      width: calc(1.55rem - 6px);
+      height: calc(1.55rem - 6px);
+      border-radius: 50%;
+      background: linear-gradient(145deg, #fff 0%, #e8e0f4 100%);
+      border: 1px solid color-mix(in srgb, var(--accent) 40%, #ccc);
+      box-shadow: 0 2px 8px rgba(60, 40, 100, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      transition: left 0.3s cubic-bezier(0.34, 1.2, 0.64, 1), transform 0.3s;
+      left: 3px;
+    }
+    .strip-dark .sw-b .thumb {
+      left: calc(100% - 3px - (1.55rem - 6px));
+      background: linear-gradient(145deg, #4a3d62 0%, #2a2238 100%);
+      border-color: color-mix(in srgb, var(--accent) 55%, #333);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+    }
+    .sw-b .hint {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 0.4rem;
+      font-size: 0.55rem;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    /* ---------- C: Minimal hairline ---------- */
+    .sw-c {
+      position: relative;
+      width: 2.75rem;
+      height: 0.38rem;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--text) 22%, transparent);
+      margin: 0.55rem 0;
+    }
+    .sw-c .thumb {
+      position: absolute;
+      top: 50%;
+      width: 1.1rem;
+      height: 1.1rem;
+      margin-top: -0.55rem;
+      border-radius: 50%;
+      background: var(--nav);
+      border: 2px solid var(--accent);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+      left: 0;
+      transition: left 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+    .strip-dark .sw-c .thumb {
+      left: calc(100% - 1.1rem);
+    }
+
+    /* ---------- D: Vertical wall switch ---------- */
+    .sw-d {
+      width: 2rem;
+      height: 2.65rem;
+      border-radius: 6px;
+      padding: 5px;
+      background: linear-gradient(180deg, #ece8e4 0%, #d4cfc8 100%);
+      border: 1px solid #a8a098;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+    .strip-dark .sw-d {
+      background: linear-gradient(180deg, #3a3638 0%, #252326 100%);
+      border-color: #1a181c;
+    }
+    .sw-d .plate {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.45) 100%);
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 0;
+    }
+    .sw-d .paddle {
+      width: 78%;
+      height: 42%;
+      border-radius: 3px;
+      background: linear-gradient(180deg, #faf8f6 0%, #d8d2cc 100%);
+      border: 1px solid #9a9490;
+      box-shadow:
+        0 3px 5px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 #fff;
+      transition: transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+      transform: translateY(-28%);
+    }
+    .strip-dark .sw-d .paddle {
+      transform: translateY(28%);
+      background: linear-gradient(180deg, #5a5460 0%, #383440 100%);
+      border-color: #2a2830;
+    }
+
+    /* ---------- E: Outline square (retro tech) ---------- */
+    .sw-e {
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 6px;
+      border: 2px solid var(--border);
+      background: color-mix(in srgb, var(--nav) 70%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+    .strip-dark .sw-e {
+      box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.35);
+    }
+    .sw-e .inner {
+      width: 1.35rem;
+      height: 1.35rem;
+      border-radius: 4px;
+      border: 2px solid color-mix(in srgb, var(--accent) 70%, var(--border));
+      background: linear-gradient(160deg, #fff 0%, var(--accent-soft) 100%);
+      box-shadow: 0 2px 6px rgba(100, 80, 140, 0.2);
+      transition: transform 0.28s, background 0.28s, border-color 0.28s;
+    }
+    .strip-dark .sw-e .inner {
+      transform: rotate(180deg);
+      background: linear-gradient(160deg, #2d2640 0%, #1a1528 100%);
+      border-color: color-mix(in srgb, var(--accent) 80%, #444);
+      box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 25%, transparent);
+    }
+
+    /* ---------- F: Current site rocker (reference) ---------- */
+    .sw-f {
+      --rocker-pad: 0.38rem;
+      --rocker-knob-w: 1.34rem;
+      position: relative;
+      width: 3.42rem;
+      height: 1.42rem;
+      border-radius: 0.28rem;
+      border: 1px solid color-mix(in srgb, var(--border) 55%, #1a1418 45%);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, transparent 42%),
+        linear-gradient(165deg, #e8e4e0 0%, #c9c2bc 38%, #a8a099 100%);
+      box-shadow:
+        inset 0 2px 4px rgba(255, 255, 255, 0.65),
+        inset 0 -3px 6px rgba(22, 18, 16, 0.28),
+        0 2px 4px rgba(12, 10, 14, 0.18);
+    }
+    .strip-dark .sw-f {
+      border-color: color-mix(in srgb, var(--accent) 28%, #0d0a10 72%);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, transparent 40%),
+        linear-gradient(165deg, #3a3638 0%, #2a2628 40%, #18161a 100%);
+      box-shadow:
+        inset 0 2px 3px rgba(255, 255, 255, 0.06),
+        inset 0 -3px 8px rgba(0, 0, 0, 0.55),
+        0 2px 6px rgba(0, 0, 0, 0.45);
+    }
+    .sw-f .slot {
+      position: absolute;
+      top: 0.2rem;
+      bottom: 0.2rem;
+      left: var(--rocker-pad);
+      right: var(--rocker-pad);
+      border-radius: 0.18rem;
+      background: linear-gradient(180deg, rgba(12, 10, 14, 0.22) 0%, rgba(40, 36, 34, 0.12) 100%);
+      box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.38);
+      pointer-events: none;
+    }
+    .strip-dark .sw-f .slot {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(30, 26, 32, 0.35) 100%);
+    }
+    .sw-f .m0,
+    .sw-f .mi {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: ui-monospace, monospace;
+      font-size: 0.56rem;
+      font-weight: 700;
+      color: color-mix(in srgb, #2a2624 78%, var(--accent) 22%);
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45), 0 -1px 0 rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+    .sw-f .m0 { left: 0.14rem; }
+    .sw-f .mi { right: 0.16rem; font-size: 0.62rem; font-weight: 500; }
+    .strip-dark .sw-f .m0,
+    .strip-dark .sw-f .mi {
+      color: color-mix(in srgb, #b8b0b8 55%, var(--accent) 45%);
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.12), 0 -1px 1px rgba(0, 0, 0, 0.85);
+    }
+    .sw-f .knob {
+      position: absolute;
+      z-index: 2;
+      top: 0.14rem;
+      bottom: 0.14rem;
+      width: var(--rocker-knob-w);
+      left: calc(100% - var(--rocker-pad) - var(--rocker-knob-w));
+      border-radius: 0.2rem;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 36%),
+        linear-gradient(175deg, #f6f4f2 0%, #dcd6d0 45%, #b8b0a8 100%);
+      border: 1px solid color-mix(in srgb, #8a8480 70%, var(--accent) 30%);
+      box-shadow: 0 3px 5px rgba(12, 10, 14, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      transition: left 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+    .strip-dark .sw-f .knob {
+      left: var(--rocker-pad);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, transparent 32%),
+        linear-gradient(175deg, color-mix(in srgb, var(--accent-soft) 55%, #4a4548 45%) 0%, #2c282c 55%, #1e1a1f 100%);
+      border-color: color-mix(in srgb, var(--accent) 42%, #3a3638 58%);
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      max-width: 42rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Theme switch — style previews</h1>
+  <p class="lede">
+    Each card shows the same control in a <strong>light-navbar</strong> strip and a <strong>dark-navbar</strong> strip.
+    Open this file in your browser (double-click or run a local server). When you pick one, say which letter you want on the live site (for example &ldquo;use B&rdquo;).
+  </p>
+
+  <div class="page-toggle">
+    <span style="font-size:0.9rem;">Preview whole page:</span>
+    <button type="button" id="demo-page-theme">Toggle light / dark background</button>
+  </div>
+
+  <div class="grid">
+    <article class="card">
+      <h2>A — Segmented pill</h2>
+      <p>Two clear choices; sliding highlight shows the active mode. Compact and readable.</p>
+      <div class="compare">
+        <div class="strip strip-light"><span>Light</span>
+          <div class="sw-a" aria-hidden="true"><span class="lbl">Light</span><span class="lbl">Dark</span></div>
+        </div>
+        <div class="strip strip-dark"><span>Dark</span>
+          <div class="sw-a" aria-hidden="true"><span class="lbl">Light</span><span class="lbl">Dark</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>B — Sun / moon slider</h2>
+      <p>Soft gradient track with a round thumb; icon changes with mode (warm vs cool).</p>
+      <div class="compare">
+        <div class="strip strip-light"><span>Light</span>
+          <div class="sw-b" aria-hidden="true">
+            <div class="hint"><span>☀</span><span>☾</span></div>
+            <div class="thumb">☀</div>
+          </div>
+        </div>
+        <div class="strip strip-dark"><span>Dark</span>
+          <div class="sw-b" aria-hidden="true">
+            <div class="hint"><span>☀</span><span>☾</span></div>
+            <div class="thumb">☾</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>C — Hairline + dot</h2>
+      <p>Very minimal: thin track and accent ring on the thumb. Fits tight nav bars.</p>
+      <div class="compare">
+        <div class="strip strip-light"><span>Light</span><div class="sw-c" aria-hidden="true"><div class="thumb"></div></div></div>
+        <div class="strip strip-dark"><span>Dark</span><div class="sw-c" aria-hidden="true"><div class="thumb"></div></div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>D — Vertical wall switch</h2>
+      <p>Classic plate and paddle; up vs down reads like a physical dimmer switch.</p>
+      <div class="compare">
+        <div class="strip strip-light"><span>Light</span>
+          <div class="sw-d" aria-hidden="true"><div class="plate"><div class="paddle"></div></div></div>
+        </div>
+        <div class="strip strip-dark"><span>Dark</span>
+          <div class="sw-d" aria-hidden="true"><div class="plate"><div class="paddle"></div></div></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>E — Framed square</h2>
+      <p>Instrument-panel vibe: outer bezel and inner tile that flips for dark mode.</p>
+      <div class="compare">
+        <div class="strip strip-light"><span>Light</span><div class="sw-e" aria-hidden="true"><div class="inner"></div></div></div>
+        <div class="strip strip-dark"><span>Dark</span><div class="sw-e" aria-hidden="true"><div class="inner"></div></div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>F — 0 / | rocker (current site)</h2>
+      <p>Your current implementation, for side-by-side comparison.</p>
+      <div class="compare">
+        <div class="strip strip-light"><span>Light</span>
+          <div class="sw-f" aria-hidden="true">
+            <span class="slot"></span><span class="m0">0</span><span class="mi">|</span><span class="knob"></span>
+          </div>
+        </div>
+        <div class="strip strip-dark"><span>Dark</span>
+          <div class="sw-f" aria-hidden="true">
+            <span class="slot"></span><span class="m0">0</span><span class="mi">|</span><span class="knob"></span>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <footer>
+    Tip: after you choose, we can wire that style into <code>index.html</code> + <code>styles.css</code> and remove this demo file if you do not want it in the repo.
+  </footer>
+
+  <script>
+    (function () {
+      var btn = document.getElementById('demo-page-theme');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var dark = document.body.classList.toggle('demo-dark-page');
+        document.documentElement.classList.toggle('demo-dark-root', dark);
+        btn.textContent = dark ? 'Use light page background' : 'Use dark page background';
+      });
+    })();
+  </script>
+</body>
+</html>
