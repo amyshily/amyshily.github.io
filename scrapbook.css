@@ -1,0 +1,690 @@
+/* ============================================================
+   Scrapbook page — paper room (same in light + dark)
+   ============================================================ */
+
+.scrapbook-body {
+  --paper-cream: #F7F1E6;
+  --paper-ivory: #FBF7F0;
+  --paper-tan: #E6D7C3;
+  --paper-brown: #D4C0A8;
+  --paper-pink: #F0DDE6;
+  --paper-lilac: #E5D9EC;
+  --paper-ink: #6B5A52;
+  --paper-ink-soft: #9A877C;
+  --page-sheet: #FBF6EE;
+  --page-edge: #E4D5C4;
+  --book-shadow: rgba(92, 70, 55, 0.22);
+  --flip-duration: 0.65s;
+  --flip-ease: cubic-bezier(0.45, 0.05, 0.25, 1);
+  min-height: 100vh;
+  color: var(--paper-ink);
+  background: var(--paper-cream);
+  overflow-x: hidden;
+}
+
+/* Keep paper look identical in dark mode */
+:root[data-theme='dark'] .scrapbook-body {
+  /* paper palette stays locked on .scrapbook-body */
+}
+
+/* Full-bleed paper atmosphere */
+.paper-room {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 12% 18%, rgba(240, 221, 230, 0.55), transparent 55%),
+    radial-gradient(ellipse 70% 55% at 88% 22%, rgba(229, 217, 236, 0.5), transparent 52%),
+    radial-gradient(ellipse 75% 60% at 70% 88%, rgba(212, 192, 168, 0.45), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 20% 78%, rgba(251, 247, 240, 0.7), transparent 50%),
+    linear-gradient(165deg, var(--paper-ivory) 0%, var(--paper-cream) 38%, var(--paper-tan) 72%, #EADCCB 100%);
+}
+
+.paper-grain {
+  position: absolute;
+  inset: 0;
+}
+
+.paper-grain-coarse {
+  opacity: 0.78;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.38 0 0 0 0 0.28 0 0 0 0 0.2 0 0 0 0.85 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+  mix-blend-mode: multiply;
+}
+
+.paper-grain-fine {
+  opacity: 0.62;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.32 0 0 0 0 0.24 0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 100px 100px;
+  mix-blend-mode: multiply;
+}
+
+.paper-wash {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.55;
+}
+
+.paper-wash-a {
+  width: min(48vw, 420px);
+  height: min(48vw, 420px);
+  top: 8%;
+  left: -8%;
+  background: var(--paper-pink);
+}
+
+.paper-wash-b {
+  width: min(42vw, 380px);
+  height: min(42vw, 380px);
+  top: 12%;
+  right: -6%;
+  background: var(--paper-lilac);
+}
+
+.paper-wash-c {
+  width: min(55vw, 480px);
+  height: min(40vw, 360px);
+  bottom: 4%;
+  left: 30%;
+  background: var(--paper-brown);
+  opacity: 0.35;
+}
+
+.paper-pulp {
+  position: absolute;
+  inset: 0;
+  opacity: 0.62;
+  mix-blend-mode: multiply;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.022' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.38 0 0 0 0 0.3 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+  background-size: 460px 460px;
+}
+
+.paper-fibers {
+  position: absolute;
+  inset: 0;
+  opacity: 0.62;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(140, 108, 82, 0.07) 2px,
+      rgba(140, 108, 82, 0.07) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 3px,
+      rgba(120, 92, 72, 0.055) 3px,
+      rgba(120, 92, 72, 0.055) 4px
+    ),
+    repeating-linear-gradient(
+      28deg,
+      transparent,
+      transparent 10px,
+      rgba(155, 118, 100, 0.05) 10px,
+      rgba(155, 118, 100, 0.05) 11px
+    ),
+    repeating-linear-gradient(
+      -18deg,
+      transparent,
+      transparent 15px,
+      rgba(150, 112, 132, 0.045) 15px,
+      rgba(150, 112, 132, 0.045) 16px
+    );
+}
+
+.paper-flecks {
+  position: absolute;
+  inset: 0;
+  opacity: 0.72;
+  mix-blend-mode: multiply;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(120, 90, 68, 0.35) 0 1.2px, transparent 2px),
+    radial-gradient(circle at 28% 62%, rgba(145, 108, 128, 0.28) 0 1.1px, transparent 1.9px),
+    radial-gradient(circle at 47% 30%, rgba(110, 85, 62, 0.32) 0 1.4px, transparent 2.2px),
+    radial-gradient(circle at 63% 78%, rgba(135, 100, 82, 0.26) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 81% 22%, rgba(118, 90, 118, 0.28) 0 1.2px, transparent 2px),
+    radial-gradient(circle at 74% 54%, rgba(130, 98, 74, 0.3) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 19% 84%, rgba(140, 112, 88, 0.27) 0 1.1px, transparent 1.9px),
+    radial-gradient(circle at 91% 68%, rgba(115, 86, 66, 0.3) 0 1.3px, transparent 2.1px),
+    radial-gradient(circle at 39% 12%, rgba(155, 118, 138, 0.24) 0 0.9px, transparent 1.6px),
+    radial-gradient(circle at 55% 46%, rgba(125, 92, 72, 0.28) 0 1.1px, transparent 1.8px),
+    radial-gradient(circle at 8% 48%, rgba(132, 100, 78, 0.22) 0 0.8px, transparent 1.4px),
+    radial-gradient(circle at 88% 40%, rgba(148, 112, 96, 0.25) 0 1px, transparent 1.7px);
+  background-size:
+    180px 200px, 210px 170px, 150px 220px, 200px 180px,
+    170px 230px, 205px 160px, 175px 190px, 220px 175px,
+    160px 210px, 190px 165px, 195px 185px, 185px 195px;
+  background-position:
+    0 0, 40px 20px, 80px 60px, 20px 100px,
+    120px 40px, 60px 140px, 160px 80px, 10px 160px,
+    100px 10px, 140px 120px, 30px 70px, 90px 150px;
+}
+
+.paper-scuff {
+  position: absolute;
+  inset: 0;
+  opacity: 0.48;
+  mix-blend-mode: multiply;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.045' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.35 0 0 0 0 0.26 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
+  background-size: 360px 360px;
+}
+
+.scrapbook-navbar {
+  background: color-mix(in srgb, var(--paper-ivory) 88%, transparent);
+  border-bottom-color: transparent;
+}
+
+.scrapbook-navbar.scrolled {
+  border-bottom-color: color-mix(in srgb, var(--paper-brown) 55%, transparent);
+}
+
+.scrapbook-navbar .nav-logo,
+.scrapbook-navbar .nav-links a {
+  color: var(--paper-ink-soft);
+}
+
+.scrapbook-navbar .nav-logo {
+  color: var(--paper-ink);
+}
+
+.scrapbook-navbar .nav-logo span {
+  color: #C9A8B8;
+}
+
+.scrapbook-navbar .nav-links a:hover,
+.scrapbook-navbar .nav-links a.active {
+  color: var(--paper-ink);
+}
+
+.scrapbook-navbar .nav-links a::after {
+  background: #C9A8B8;
+}
+
+.scrapbook-navbar .theme-toggle {
+  background: color-mix(in srgb, var(--paper-ivory) 92%, white);
+  border-color: color-mix(in srgb, var(--paper-brown) 55%, transparent);
+  color: var(--paper-ink);
+  box-shadow: 0 2px 8px rgba(92, 70, 55, 0.08);
+}
+
+.scrapbook-navbar .theme-toggle-track {
+  background: color-mix(in srgb, var(--paper-lilac) 70%, var(--paper-ivory));
+  border-color: color-mix(in srgb, var(--paper-brown) 40%, transparent);
+}
+
+.scrapbook-navbar .nav-toggle span {
+  background: var(--paper-ink);
+}
+
+.scrapbook-main {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5.5rem 1.25rem 3rem;
+  gap: 1.35rem;
+}
+
+.scrapbook-stage {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, auto) 2.75rem;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  column-gap: clamp(0.75rem, 2vw, 1.5rem);
+  perspective: 2600px;
+  perspective-origin: 50% 50%;
+  width: 100%;
+}
+
+.scrapbook-book-frame {
+  --cover-ratio: 1.2946; /* 1024 / 791 cover image */
+  --page-w: min(640px, 55vw);
+  --page-h: calc(var(--page-w) / var(--cover-ratio));
+  width: calc(var(--page-w) * 2);
+  height: var(--page-h);
+  max-width: calc(100vw - 6rem);
+  border-radius: 10px;
+  overflow: visible;
+  filter: drop-shadow(0 18px 32px var(--book-shadow));
+  transform-style: preserve-3d;
+  justify-self: center;
+}
+
+.scrapbook-book {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  border-radius: 10px;
+  background: transparent;
+  --book-shift: 0%;
+  transform: translateX(var(--book-shift));
+  transition: transform var(--flip-duration) var(--flip-ease);
+  will-change: transform;
+}
+
+.scrapbook-book.is-closed-start {
+  --book-shift: -25%;
+}
+
+.scrapbook-book.is-closed-start .book-base-left {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scrapbook-book.is-closed-start .scrapbook-spine {
+  opacity: 0;
+}
+
+.scrapbook-book.is-closed-start .scrapbook-page[data-page="0"] .page-front {
+  border-radius: 10px;
+  border-left: 1px solid var(--page-edge);
+  box-shadow: 0 14px 28px rgba(92, 70, 55, 0.22);
+}
+
+.scrapbook-book.is-closed-start .page-curl,
+.scrapbook-book.is-closed-start .page-sheen {
+  opacity: 0;
+}
+
+.scrapbook-book.is-closed-end {
+  --book-shift: 25%;
+}
+
+.scrapbook-book.is-closed-end .book-base-right {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scrapbook-book.is-closed-end .scrapbook-spine {
+  opacity: 0;
+}
+
+.scrapbook-book.is-closed-end .scrapbook-page.flipped:last-child .page-back {
+  border-radius: 10px;
+  border-right: 1px solid var(--page-edge);
+  box-shadow: 0 14px 28px rgba(92, 70, 55, 0.22);
+}
+
+.book-base {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: var(--page-sheet);
+  border: 1px solid var(--page-edge);
+  box-shadow: inset 0 0 40px rgba(196, 168, 130, 0.08);
+  overflow: hidden;
+  z-index: 0;
+  transition: opacity 0.25s ease;
+}
+
+.book-base-left {
+  left: 0;
+  border-radius: 10px 0 0 10px;
+  border-right: none;
+  background:
+    linear-gradient(90deg, rgba(196, 168, 130, 0.12), transparent 18%),
+    var(--page-sheet);
+}
+
+.book-base-right {
+  right: 0;
+  border-radius: 0 10px 10px 0;
+  border-left: none;
+  background:
+    linear-gradient(270deg, transparent 82%, rgba(196, 168, 130, 0.1)),
+    var(--page-sheet);
+}
+
+.book-base::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(196, 168, 130, 0.08) 28px,
+      rgba(196, 168, 130, 0.08) 29px
+    ),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.18'/%3E%3C/svg%3E");
+  background-size: auto, 140px 140px;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.scrapbook-spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 14px;
+  transform: translateX(-50%);
+  border-radius: 3px;
+  background: linear-gradient(180deg, #C4A882, #B8927A 45%, #C9A8B8);
+  box-shadow:
+    inset 2px 0 3px rgba(255, 255, 255, 0.18),
+    inset -2px 0 4px rgba(0, 0, 0, 0.16);
+  z-index: 40;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.scrapbook-page {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg) translateZ(0);
+  transition: transform var(--flip-duration) var(--flip-ease);
+  cursor: url("images/custom-cursor-64.png") 32 32, pointer;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.scrapbook-page.is-turning {
+  z-index: 60 !important;
+}
+
+.scrapbook-page.is-top:not(.flipped) {
+  pointer-events: auto;
+}
+
+.scrapbook-page.flipped {
+  transform: rotateY(-180deg) translateZ(0);
+}
+
+.page-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  border: 1px solid var(--page-edge);
+  background-color: var(--page-sheet);
+  background-image:
+    linear-gradient(180deg, rgba(255, 252, 245, 0.55), rgba(255, 252, 245, 0)),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(196, 168, 130, 0.08) 28px,
+      rgba(196, 168, 130, 0.08) 29px
+    ),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.18'/%3E%3C/svg%3E");
+  background-size: auto, auto, 140px 140px;
+  box-shadow: inset 0 0 50px rgba(196, 168, 130, 0.08);
+}
+
+.page-front {
+  z-index: 2;
+  border-radius: 0 10px 10px 0;
+  border-left: none;
+}
+
+.page-back {
+  transform: rotateY(180deg);
+  z-index: 1;
+  border-radius: 10px 0 0 10px;
+  border-right: none;
+  background-image:
+    linear-gradient(90deg, rgba(196, 168, 130, 0.16), transparent 18%),
+    linear-gradient(180deg, rgba(255, 252, 245, 0.4), rgba(255, 252, 245, 0)),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(196, 168, 130, 0.07) 28px,
+      rgba(196, 168, 130, 0.07) 29px
+    );
+}
+
+.page-face::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 18px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.page-front::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(120, 90, 70, 0.14), transparent);
+}
+
+.page-back::before {
+  right: 0;
+  background: linear-gradient(270deg, rgba(120, 90, 70, 0.14), transparent);
+}
+
+.page-curl {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 18%;
+  pointer-events: none;
+  z-index: 4;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(120, 90, 70, 0.05) 70%,
+    rgba(80, 55, 40, 0.1) 100%
+  );
+  opacity: 0.4;
+}
+
+.page-sheen {
+  display: none;
+}
+
+.blank-page {
+  position: relative;
+  height: 100%;
+  padding: 1.75rem 1.6rem 1.6rem 2rem;
+}
+
+.blank-cover {
+  background:
+    linear-gradient(155deg, rgba(229, 217, 236, 0.55) 0%, rgba(247, 241, 230, 0.2) 42%, rgba(240, 221, 230, 0.45) 100%);
+}
+
+.cover-photo {
+  padding: 0;
+  overflow: hidden;
+}
+
+.cover-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.blank-back-cover {
+  background:
+    linear-gradient(205deg, rgba(230, 215, 195, 0.6) 0%, rgba(240, 221, 230, 0.35) 45%, rgba(229, 217, 236, 0.55) 100%);
+}
+
+.blank-end {
+  background:
+    linear-gradient(155deg, rgba(230, 215, 195, 0.45) 0%, rgba(251, 247, 240, 0.2) 50%, rgba(229, 217, 236, 0.4) 100%);
+}
+
+.blank-washi,
+.blank-tape {
+  position: absolute;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.blank-washi {
+  height: 22px;
+  width: 118px;
+  opacity: 0.82;
+  box-shadow: 0 2px 6px rgba(92, 70, 55, 0.1);
+}
+
+.blank-washi-lilac {
+  top: 1.5rem;
+  left: -0.35rem;
+  transform: rotate(-7deg);
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.28) 0 6px, transparent 6px 12px),
+    #D9C8E4;
+}
+
+.blank-washi-rose {
+  bottom: 2.2rem;
+  right: -0.5rem;
+  width: 100px;
+  transform: rotate(11deg);
+  background:
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.3) 0 4px, transparent 4px 8px),
+    #E8C5D4;
+}
+
+.blank-washi-soft {
+  top: 1rem;
+  left: 50%;
+  width: 140px;
+  transform: translateX(-50%) rotate(-2deg);
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.3) 0 5px, transparent 5px 10px),
+    #E6D3B8;
+}
+
+.blank-washi-end {
+  bottom: 1.6rem;
+  left: 50%;
+  width: 130px;
+  transform: translateX(-50%) rotate(-3deg);
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.28) 0 4px, transparent 4px 9px),
+    #DCC8E0;
+}
+
+.blank-tape {
+  width: 54px;
+  height: 18px;
+  background: rgba(255, 248, 220, 0.7);
+  box-shadow: 0 1px 3px rgba(92, 70, 55, 0.1);
+}
+
+.blank-tape-tl {
+  top: 0.95rem;
+  left: 1.5rem;
+  transform: rotate(-16deg);
+}
+
+.blank-tape-tr {
+  top: 1rem;
+  right: 1.3rem;
+  transform: rotate(13deg);
+}
+
+.scrapbook-nav {
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--paper-brown) 70%, transparent);
+  background: color-mix(in srgb, var(--paper-ivory) 90%, white);
+  color: var(--paper-ink);
+  font-size: 1.6rem;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 14px rgba(92, 70, 55, 0.1);
+  transition: transform 0.25s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)), border-color 0.25s, color 0.25s, opacity 0.25s;
+  cursor: url("images/custom-cursor-64.png") 32 32, pointer;
+  z-index: 2;
+}
+
+.scrapbook-nav:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: #C9A8B8;
+  color: #9A6F88;
+}
+
+.scrapbook-nav:disabled {
+  opacity: 0.35;
+  cursor: url("images/custom-cursor-64.png") 32 32, not-allowed;
+}
+
+.scrapbook-nav:focus-visible {
+  outline: 2px solid #C9A8B8;
+  outline-offset: 3px;
+}
+
+.scrapbook-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.scrapbook-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: color-mix(in srgb, var(--paper-brown) 65%, transparent);
+  transition: transform 0.25s, background 0.25s;
+  cursor: url("images/custom-cursor-64.png") 32 32, pointer;
+}
+
+.scrapbook-dot.active {
+  background: #C9A8B8;
+  transform: scale(1.25);
+}
+
+.scrapbook-dot:focus-visible {
+  outline: 2px solid #C9A8B8;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrapbook-body {
+    --flip-duration: 0.01ms;
+  }
+}
+
+@media (max-width: 768px) {
+  .scrapbook-stage {
+    grid-template-columns: 2.35rem minmax(0, auto) 2.35rem;
+    column-gap: 0.45rem;
+  }
+
+  .scrapbook-book-frame {
+    --page-w: min(200px, 44vw);
+    --page-h: calc(var(--page-w) / var(--cover-ratio));
+  }
+
+  .scrapbook-nav {
+    width: 2.35rem;
+    height: 2.35rem;
+    font-size: 1.35rem;
+  }
+}
