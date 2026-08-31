@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Who Am I? — Amy Ly</title>
+  <script>
+    (function() {
+      try {
+        var storedTheme = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = storedTheme || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css?v=20260808-page" />
+  <link rel="stylesheet" href="adventures.css?v=20260829" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Playpen+Sans:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet" />
+</head>
+<body class="adventures-body">
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">A<span>L</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#involvement">Involvement</a></li>
+        <li><a href="index.html#projects">Personal Projects</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="adventures.html" class="active">Who Am I?</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-circuit-label theme-circuit-label-light">L</span>
+            <span class="theme-circuit-label theme-circuit-label-dark">D</span>
+            <span class="theme-toggle-knob">
+              <span class="theme-toggle-knob-icon">⚡</span>
+            </span>
+          </span>
+          <span class="theme-toggle-text">Mode</span>
+        </button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="adventures-main">
+    <header class="adventures-header">
+      <p class="adventures-eyebrow">⋆ ˚｡ ⋆୨♡୧⋆ ˚｡ ⋆</p>
+      <h1 class="adventures-title">Who Am I?</h1>
+      <p class="adventures-subtitle">table of contents</p>
+    </header>
+
+    <nav class="adventures-toc" aria-label="Who Am I?">
+      <ol class="adventures-toc-list">
+        <li class="adventures-toc-item">
+          <a href="scrapbook.html" class="adventures-toc-link">
+            <span class="adventures-toc-num">01</span>
+            <span class="adventures-toc-text">
+              <span class="adventures-toc-name">Scrapbook</span>
+              <span class="adventures-toc-desc">flip through Amy's memory book</span>
+            </span>
+            <span class="adventures-toc-arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+        <li class="adventures-toc-item">
+          <a href="photobooth.html" class="adventures-toc-link">
+            <span class="adventures-toc-num">02</span>
+            <span class="adventures-toc-text">
+              <span class="adventures-toc-name">Photobooth</span>
+              <span class="adventures-toc-desc">take a four-photo strip</span>
+            </span>
+            <span class="adventures-toc-arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+        <li class="adventures-toc-item">
+          <a href="lys-garage.html" class="adventures-toc-link">
+            <span class="adventures-toc-num">03</span>
+            <span class="adventures-toc-text">
+              <span class="adventures-toc-name">Ly's Garage</span>
+              <span class="adventures-toc-desc">cars</span>
+            </span>
+            <span class="adventures-toc-arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+        <li class="adventures-toc-item">
+          <a href="workspace.html" class="adventures-toc-link">
+            <span class="adventures-toc-num">04</span>
+            <span class="adventures-toc-text">
+              <span class="adventures-toc-name">Workspace</span>
+              <span class="adventures-toc-desc">my setup</span>
+            </span>
+            <span class="adventures-toc-arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+      </ol>
+    </nav>
+  </main>
+
+  <script src="script.js?v=20260808-page"></script>
+</body>
+</html>

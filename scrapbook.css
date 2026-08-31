@@ -236,6 +236,14 @@
   gap: 1.35rem;
 }
 
+.scrapbook-back {
+  align-self: flex-start;
+  width: 100%;
+  max-width: min(960px, 100%);
+  margin: 0 auto -0.25rem;
+  padding-left: 2.75rem;
+}
+
 .scrapbook-stage {
   display: grid;
   grid-template-columns: 2.75rem minmax(0, auto) 2.75rem;
@@ -672,6 +680,10 @@
 }
 
 @media (max-width: 768px) {
+  .scrapbook-back {
+    padding-left: 0.25rem;
+  }
+
   .scrapbook-stage {
     grid-template-columns: 2.35rem minmax(0, auto) 2.35rem;
     column-gap: 0.45rem;

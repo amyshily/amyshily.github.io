@@ -590,83 +590,6 @@ ul {
   transform: translateY(-2px);
 }
 
-.btn-circuit {
-  position: relative;
-  gap: 0.55rem;
-  background: linear-gradient(145deg, color-mix(in srgb, var(--color-accent) 86%, #5b4687 14%) 0%, color-mix(in srgb, var(--color-rose) 65%, #6a4f94 35%) 100%);
-  color: #fff;
-  border: 1px solid color-mix(in srgb, var(--color-accent) 65%, var(--color-border) 35%);
-  box-shadow: 0 8px 16px rgba(95, 66, 135, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.26);
-  overflow: hidden;
-}
-
-.btn-circuit::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(130deg, transparent 0%, rgba(255, 255, 255, 0.16) 36%, transparent 60%);
-  transform: translateX(-120%);
-  transition: transform 0.45s var(--ease-out);
-}
-
-.btn-circuit:hover {
-  border-color: color-mix(in srgb, var(--color-accent) 86%, #fff 14%);
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 22px rgba(84, 56, 124, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.28);
-}
-
-.btn-circuit:hover::before {
-  transform: translateX(120%);
-}
-
-.btn-circuit-chip {
-  width: 1rem;
-  height: 1rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: color-mix(in srgb, #fff 78%, var(--color-accent-soft) 22%);
-  filter: drop-shadow(0 0 4px rgba(244, 237, 255, 0.42));
-}
-
-.btn-circuit-chip svg {
-  width: 100%;
-  height: 100%;
-}
-
-.btn-circuit-label {
-  position: relative;
-  z-index: 1;
-}
-
-.btn-circuit-pulse {
-  width: 0.45rem;
-  height: 0.45rem;
-  border-radius: 50%;
-  background: color-mix(in srgb, #fff 72%, var(--color-warm) 28%);
-  box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 72%, #fff 28%);
-  animation: statusPulse 1.8s ease-in-out infinite;
-}
-
-@keyframes statusPulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 72%, #fff 28%), 0 0 10px color-mix(in srgb, var(--color-accent) 52%, transparent 48%);
-    transform: scale(1);
-  }
-  50% {
-    box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-accent) 0%, transparent), 0 0 4px color-mix(in srgb, var(--color-accent) 38%, transparent 62%);
-    transform: scale(0.92);
-  }
-}
-
-:root[data-theme='dark'] .btn-circuit {
-  background: linear-gradient(145deg, color-mix(in srgb, var(--color-accent) 42%, #221733 58%) 0%, color-mix(in srgb, var(--color-rose) 34%, #2c1d40 66%) 100%);
-  border-color: color-mix(in srgb, var(--color-accent) 52%, var(--color-border) 48%);
-  color: #f8f2ff;
-}
-
 /* ---------- Hero Animations ---------- */
 .animate-in {
   opacity: 0;
@@ -717,13 +640,66 @@ ul {
 
 .about-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 3rem;
-  align-items: start;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 0.85rem 2rem;
+  align-items: stretch;
+}
+
+.about-text {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.about-lens {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  width: 100%;
+}
+
+.about-ford {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  width: 100%;
+}
+
+.about-headphones {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  width: 100%;
+}
+
+.about-ford .highlight-card,
+.about-headphones .highlight-card {
+  flex: 1;
+  width: 100%;
+  align-items: center;
+  padding: 0.65rem 1rem;
+  gap: 0.65rem;
+}
+
+.about-headphones .spotify-highlight {
+  min-height: 0;
+  align-items: center;
+}
+
+.about-ford .ford-highlight {
+  align-items: center;
+}
+
+.about-lens .lens-highlight {
+  width: 100%;
+}
+
+.about-text p:last-child {
+  margin-bottom: 0;
 }
 
 .about-text p {
-  font-size: 1.05rem;
+  font-size: 1.12rem;
   color: var(--color-text-light);
   margin-bottom: 1.25rem;
   line-height: 1.85;
@@ -901,16 +877,6 @@ ul {
   border-color: color-mix(in srgb, var(--scrapbook-pink) 58%, var(--color-border));
 }
 
-.scrapbook-highlight::after {
-  content: '✧';
-  position: absolute;
-  right: 1rem;
-  bottom: 0.7rem;
-  color: color-mix(in srgb, var(--scrapbook-pink) 70%, transparent);
-  font-size: 1.1rem;
-  line-height: 1;
-}
-
 .scrapbook-highlight:hover {
   border-color: var(--scrapbook-pink);
   box-shadow:
@@ -940,6 +906,66 @@ ul {
 
 :root[data-theme='dark'] .scrapbook-highlight .highlight-text h4 {
   color: color-mix(in srgb, var(--scrapbook-pink) 76%, var(--color-text));
+}
+
+.lens-highlight {
+  --lens-inset: 0.75rem;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.55rem;
+  padding: 0.6rem var(--lens-inset) var(--lens-inset);
+}
+
+.lens-highlight-top {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.lens-highlight-top .highlight-text {
+  width: auto;
+  flex: 1;
+  min-width: 0;
+}
+
+.lens-highlight .highlight-text p {
+  margin-bottom: 0;
+}
+
+.lens-highlight-photo {
+  position: relative;
+  width: 94%;
+  margin-inline: auto;
+  flex: none;
+  margin-bottom: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid color-mix(in srgb, var(--scrapbook-pink) 45%, white);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--scrapbook-pink) 20%, transparent);
+}
+
+.lens-highlight-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.lens-highlight-caption {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  margin: 0;
+  padding: 0.18rem 0.42rem;
+  font-size: 0.58rem;
+  line-height: 1.3;
+  color: rgba(255, 251, 254, 0.95);
+  text-align: right;
+  letter-spacing: 0.02em;
+  background: rgba(28, 20, 36, 0.58);
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
 }
 
 /* ---------- Experience / Timeline ---------- */
@@ -1578,6 +1604,15 @@ ul {
   /* About */
   .about-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .about-text,
+  .about-lens,
+  .about-ford,
+  .about-headphones {
+    grid-column: 1;
+    grid-row: auto;
   }
 
   /* Involvement */

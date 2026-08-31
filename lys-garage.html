@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ly's Garage — Amy Ly</title>
+  <script>
+    (function() {
+      try {
+        var storedTheme = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = storedTheme || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css?v=20260808-page" />
+  <link rel="stylesheet" href="adventures.css?v=20260829-garage9" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Playpen+Sans:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet" />
+</head>
+<body class="adventures-body garage-body">
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">A<span>L</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#involvement">Involvement</a></li>
+        <li><a href="index.html#projects">Personal Projects</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="adventures.html" class="active">Who Am I?</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-circuit-label theme-circuit-label-light">L</span>
+            <span class="theme-circuit-label theme-circuit-label-dark">D</span>
+            <span class="theme-toggle-knob">
+              <span class="theme-toggle-knob-icon">⚡</span>
+            </span>
+          </span>
+          <span class="theme-toggle-text">Mode</span>
+        </button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="adventures-main garage-main">
+    <header class="adventures-header">
+      <p class="adventures-eyebrow"><a href="adventures.html" class="garage-back">← Who Am I?</a></p>
+      <h1 class="adventures-title">Ly's Garage</h1>
+      <p class="adventures-subtitle">cars</p>
+    </header>
+
+    <div class="garage-grid">
+    <article class="garage-vehicle">
+      <div class="garage-vehicle-photo">
+        <img src="images/honda-insight.jpg" alt="2022 Honda Insight EX in dark blue" />
+      </div>
+
+      <div class="garage-vehicle-info">
+        <div class="garage-vehicle-header">
+          <h2 class="garage-vehicle-name">2022 Honda Insight EX</h2>
+          <p class="garage-vehicle-tagline">daily driver · hybrid sedan</p>
+        </div>
+
+        <dl class="garage-specs">
+          <div class="garage-spec">
+            <dt>Engine</dt>
+            <dd>1.5L I4 hybrid · 151 hp total</dd>
+          </div>
+          <div class="garage-spec">
+            <dt>Drivetrain</dt>
+            <dd>Front-wheel drive · eCVT</dd>
+          </div>
+          <div class="garage-spec">
+            <dt>Fuel economy</dt>
+            <dd>~52 city / 49 highway MPG</dd>
+          </div>
+          <div class="garage-spec">
+            <dt>Reliability</dt>
+            <dd>Honda hybrid — known for long-term dependability</dd>
+          </div>
+        </dl>
+      </div>
+    </article>
+
+    <article class="garage-vehicle">
+      <div class="garage-vehicle-photo">
+        <img src="images/lexus-gx550.jpg" alt="2025 Lexus GX 550 Overtrail in white" />
+      </div>
+
+      <div class="garage-vehicle-info">
+        <div class="garage-vehicle-header">
+          <h2 class="garage-vehicle-name">2025 Lexus GX 550 Overtrail</h2>
+          <p class="garage-vehicle-tagline">off-road SUV · full-time 4WD</p>
+        </div>
+
+        <dl class="garage-specs">
+          <div class="garage-spec">
+            <dt>Engine</dt>
+            <dd>3.4L twin-turbo V6 · 349 hp · 479 lb-ft</dd>
+          </div>
+          <div class="garage-spec">
+            <dt>Drivetrain</dt>
+            <dd>Full-time 4WD · 10-speed automatic</dd>
+          </div>
+          <div class="garage-spec">
+            <dt>Fuel economy</dt>
+            <dd>~15 city / 21 highway MPG</dd>
+          </div>
+          <div class="garage-spec">
+            <dt>Reliability</dt>
+            <dd>Lexus — among the most dependable luxury brands</dd>
+          </div>
+        </dl>
+      </div>
+    </article>
+
+    <article class="garage-vehicle">
+      <div class="garage-vehicle-photo">
+        <img src="images/mercedes-c350.jpg" alt="2006 Mercedes-Benz C350 in silver" />
+      </div>
+
+      <div class="garage-vehicle-info">
+        <div class="garage-vehicle-header">
+          <h2 class="garage-vehicle-name">2006 Mercedes-Benz C350</h2>
+          <p class="garage-vehicle-tagline">luxury sedan · rear-wheel drive</p>
+        </div>
+
+        <dl class="garage-specs">
+          <div class="garage-spec">
+            <dt>Engine</dt>
+            <dd>3.5L V6 · 268 hp · 258 lb-ft</dd>
+          </div>
+          <div class="garage-spec">
+            <dt>Drivetrain</dt>
+            <dd>Rear-wheel drive · 7-speed automatic</dd>
+          </div>
+          <div class="garage-spec">
+            <dt>Fuel economy</dt>
+            <dd>~19 city / 26 highway MPG</dd>
+          </div>
+          <div class="garage-spec">
+            <dt>Reliability</dt>
+            <dd>Solid German build — higher upkeep as it ages</dd>
+          </div>
+        </dl>
+      </div>
+    </article>
+    </div>
+  </main>
+
+  <script src="script.js?v=20260808-page"></script>
+</body>
+</html>

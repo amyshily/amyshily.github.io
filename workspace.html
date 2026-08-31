@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workspace — Amy Ly</title>
+  <script>
+    (function() {
+      try {
+        var storedTheme = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = storedTheme || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css?v=20260808-page" />
+  <link rel="stylesheet" href="adventures.css?v=20260830-workspace" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Playpen+Sans:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet" />
+</head>
+<body class="adventures-body garage-body">
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">A<span>L</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#involvement">Involvement</a></li>
+        <li><a href="index.html#projects">Personal Projects</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="adventures.html" class="active">Who Am I?</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-circuit-label theme-circuit-label-light">L</span>
+            <span class="theme-circuit-label theme-circuit-label-dark">D</span>
+            <span class="theme-toggle-knob">
+              <span class="theme-toggle-knob-icon">⚡</span>
+            </span>
+          </span>
+          <span class="theme-toggle-text">Mode</span>
+        </button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="adventures-main garage-main workspace-main">
+    <header class="adventures-header">
+      <p class="adventures-eyebrow"><a href="adventures.html" class="garage-back">← Who Am I?</a></p>
+      <h1 class="adventures-title">Workspace</h1>
+      <p class="adventures-subtitle">my setup</p>
+    </header>
+
+    <div class="garage-grid">
+      <article class="garage-vehicle workspace-build">
+        <div class="garage-vehicle-photo workspace-build-photo">
+          <img src="images/pc-build.jpg" alt="Custom white gaming PC with purple RGB lighting and tempered glass side panel" />
+        </div>
+
+        <div class="garage-vehicle-info">
+          <div class="garage-vehicle-header">
+            <h2 class="garage-vehicle-name">PC</h2>
+          </div>
+
+          <dl class="garage-specs">
+            <div class="garage-spec">
+              <dt>CPU</dt>
+              <dd>Intel Core i7-13700K · 3.4 GHz · 16-core</dd>
+            </div>
+            <div class="garage-spec">
+              <dt>RAM</dt>
+              <dd>Corsair Vengeance 32 GB DDR5-5600 (2 × 16 GB)</dd>
+            </div>
+            <div class="garage-spec">
+              <dt>GPU</dt>
+              <dd>ASUS TUF Gaming RTX 3070 Ti 8 GB</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="garage-vehicle workspace-build workspace-laptop">
+        <div class="garage-vehicle-photo workspace-build-photo workspace-device-photo workspace-laptop-photo">
+          <img src="images/laptop-zenbook.png" alt="ASUS Zenbook laptop open with keyboard and display visible" />
+        </div>
+
+        <div class="garage-vehicle-info">
+          <div class="garage-vehicle-header">
+            <h2 class="garage-vehicle-name">Laptop</h2>
+          </div>
+
+          <dl class="garage-specs">
+            <div class="garage-spec">
+              <dt>CPU</dt>
+              <dd>Intel Core Ultra 7 155H · 3.80 GHz</dd>
+            </div>
+            <div class="garage-spec">
+              <dt>RAM</dt>
+              <dd>16 GB DDR5</dd>
+            </div>
+            <div class="garage-spec">
+              <dt>GPU</dt>
+              <dd>Intel Arc Graphics</dd>
+            </div>
+            <div class="garage-spec">
+              <dt>Storage</dt>
+              <dd>1 TB SSD</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="garage-vehicle workspace-build workspace-ipad">
+        <div class="garage-vehicle-photo workspace-build-photo workspace-device-photo">
+          <img src="images/ipad-10th-gen.png" alt="Pink iPad 10th generation with Apple Pencil" />
+        </div>
+
+        <div class="garage-vehicle-info">
+          <div class="garage-vehicle-header">
+            <h2 class="garage-vehicle-name">iPad</h2>
+          </div>
+
+          <dl class="garage-specs">
+            <div class="garage-spec">
+              <dt>Chip</dt>
+              <dd>Apple A14 Bionic</dd>
+            </div>
+            <div class="garage-spec">
+              <dt>Display</dt>
+              <dd>10.9" Liquid Retina</dd>
+            </div>
+            <div class="garage-spec">
+              <dt>Storage</dt>
+              <dd>64 GB</dd>
+            </div>
+            <div class="garage-spec">
+              <dt>Pencil</dt>
+              <dd>Apple Pencil (USB-C)</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="garage-vehicle workspace-build workspace-camera">
+        <div class="garage-vehicle-photo workspace-build-photo workspace-device-photo">
+          <img src="images/sony-dsc-w330.png" alt="Sony Cyber-shot DSC-W330 compact digital camera in red" />
+        </div>
+
+        <div class="garage-vehicle-info">
+          <div class="garage-vehicle-header">
+            <h2 class="garage-vehicle-name">Camera</h2>
+          </div>
+
+          <dl class="garage-specs">
+            <div class="garage-spec">
+              <dt>Model</dt>
+              <dd>Sony Cyber-shot DSC-W330</dd>
+            </div>
+            <div class="garage-spec">
+              <dt>Sensor</dt>
+              <dd>14.1 MP</dd>
+            </div>
+            <div class="garage-spec">
+              <dt>Lens</dt>
+              <dd>Carl Zeiss Vario-Tessar · 4× zoom</dd>
+            </div>
+            <div class="garage-spec">
+              <dt>Display</dt>
+              <dd>2.7" LCD</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="garage-vehicle workspace-build workspace-phone">
+        <div class="garage-vehicle-photo workspace-build-photo workspace-device-photo">
+          <img src="images/iphone-14-pro.png" alt="Apple iPhone 14 Pro in deep purple" />
+        </div>
+
+        <div class="garage-vehicle-info">
+          <div class="garage-vehicle-header">
+            <h2 class="garage-vehicle-name">iPhone</h2>
+          </div>
+
+          <dl class="garage-specs">
+            <div class="garage-spec">
+              <dt>Model</dt>
+              <dd>iPhone 14 Pro</dd>
+            </div>
+            <div class="garage-spec">
+              <dt>Chip</dt>
+              <dd>Apple A16 Bionic</dd>
+            </div>
+            <div class="garage-spec">
+              <dt>Display</dt>
+              <dd>6.1" Super Retina XDR</dd>
+            </div>
+            <div class="garage-spec">
+              <dt>Camera</dt>
+              <dd>48 MP Pro system</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script src="script.js?v=20260808-page"></script>
+</body>
+</html>

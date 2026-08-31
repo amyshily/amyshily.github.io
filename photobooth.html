@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photobooth — Amy Ly</title>
+  <script>
+    (function() {
+      try {
+        var storedTheme = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = storedTheme || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css?v=20260808-page" />
+  <link rel="stylesheet" href="adventures.css?v=20260830" />
+  <link rel="stylesheet" href="photobooth.css?v=20260830-star" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Playpen+Sans:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet" />
+</head>
+<body class="photobooth-body">
+  <div class="booth-bg" aria-hidden="true">
+    <div class="booth-dots"></div>
+  </div>
+
+  <nav class="navbar booth-navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">A<span>L</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#experience">Experience</a></li>
+        <li><a href="index.html#involvement">Involvement</a></li>
+        <li><a href="index.html#projects">Personal Projects</a></li>
+        <li><a href="index.html#skills">Skills</a></li>
+        <li><a href="adventures.html" class="active">Who Am I?</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-circuit-label theme-circuit-label-light">L</span>
+            <span class="theme-circuit-label theme-circuit-label-dark">D</span>
+            <span class="theme-toggle-knob">
+              <span class="theme-toggle-knob-icon">⚡</span>
+            </span>
+          </span>
+          <span class="theme-toggle-text">Mode</span>
+        </button>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="booth-main">
+    <header class="booth-header">
+      <p class="booth-eyebrow adventures-eyebrow"><a href="adventures.html" class="garage-back">← Who Am I?</a></p>
+      <h1 class="booth-title">Photo Booth</h1>
+    </header>
+
+    <div class="booth-stage">
+      <section class="booth-camera-panel" id="camera-panel">
+        <div class="booth-kiosk-unit">
+          <div class="booth-kiosk-row">
+            <div class="booth-kiosk" id="booth-kiosk">
+            <div class="booth-bow" aria-hidden="true"></div>
+
+            <div class="booth-kiosk-header">
+              <span class="booth-kiosk-lamp" id="booth-lamp" aria-hidden="true"></span>
+            </div>
+
+            <div class="booth-viewfinder" id="viewfinder">
+              <span class="booth-corner booth-corner-tl" aria-hidden="true"></span>
+              <span class="booth-corner booth-corner-tr" aria-hidden="true"></span>
+              <span class="booth-corner booth-corner-bl" aria-hidden="true"></span>
+              <span class="booth-corner booth-corner-br" aria-hidden="true"></span>
+
+              <video id="camera-video" autoplay playsinline muted aria-label="Camera preview"></video>
+              <canvas id="capture-canvas" hidden></canvas>
+
+              <div class="booth-lens" id="booth-lens" aria-hidden="true">
+                <div class="booth-lens-ring booth-lens-ring-outer"></div>
+                <div class="booth-lens-ring booth-lens-ring-inner"></div>
+                <div class="booth-lens-aperture">
+                  <span class="booth-lens-blade" style="--i: 0"></span>
+                  <span class="booth-lens-blade" style="--i: 1"></span>
+                  <span class="booth-lens-blade" style="--i: 2"></span>
+                  <span class="booth-lens-blade" style="--i: 3"></span>
+                  <span class="booth-lens-blade" style="--i: 4"></span>
+                  <span class="booth-lens-blade" style="--i: 5"></span>
+                  <span class="booth-lens-blade" style="--i: 6"></span>
+                  <span class="booth-lens-blade" style="--i: 7"></span>
+                </div>
+                <div class="booth-lens-glass"></div>
+              </div>
+
+              <div class="booth-idle" id="booth-idle">
+                <p class="booth-idle-text">tap open camera to peek inside ♡</p>
+              </div>
+
+              <div class="booth-countdown" id="booth-countdown" hidden aria-live="polite">
+                <div class="booth-countdown-bubble">
+                  <span class="booth-countdown-num" id="countdown-num">3</span>
+                </div>
+              </div>
+
+              <div class="booth-flash" id="booth-flash" hidden aria-hidden="true"></div>
+
+              <div class="booth-progress" id="booth-progress" hidden>
+                <div class="booth-progress-hearts">
+                  <span class="booth-heart" data-heart="0">♡</span>
+                  <span class="booth-heart" data-heart="1">♡</span>
+                  <span class="booth-heart" data-heart="2">♡</span>
+                  <span class="booth-heart" data-heart="3">♡</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="booth-snap-star" id="btn-snap" type="button" hidden aria-label="Snap photo strip">
+            <span class="booth-snap-star-glow" aria-hidden="true"></span>
+            <span class="booth-snap-star-icon" aria-hidden="true">★</span>
+            <span class="booth-snap-star-sparkle booth-snap-star-sparkle-a" aria-hidden="true">✦</span>
+            <span class="booth-snap-star-sparkle booth-snap-star-sparkle-b" aria-hidden="true">✧</span>
+          </button>
+          </div>
+
+          <div class="booth-dispense-slot" id="dispense-slot" aria-hidden="true">
+            <span class="booth-dispense-slot-mouth"></span>
+            <span class="booth-dispense-slot-light"></span>
+          </div>
+
+          <div class="booth-dispense-chute" id="dispense-chute">
+            <section class="booth-strip-panel" id="strip-panel" hidden>
+              <p class="booth-strip-label">your strip ♡</p>
+              <div class="booth-strip-wrapper">
+                <span class="booth-tape booth-tape-left" aria-hidden="true"></span>
+                <span class="booth-tape booth-tape-right" aria-hidden="true"></span>
+                <canvas id="strip-canvas" class="booth-strip-canvas" aria-label="Photo strip preview"></canvas>
+              </div>
+            </section>
+          </div>
+
+          <div class="booth-strip-actions" id="strip-actions" hidden>
+            <button class="booth-btn booth-btn-primary" id="btn-download" type="button">Save Strip</button>
+            <button class="booth-btn booth-btn-ghost" id="btn-new" type="button">New Strip</button>
+          </div>
+        </div>
+
+        <div class="booth-setup" id="booth-setup">
+          <div class="booth-style-picker" id="style-picker">
+            <div class="booth-style-options" role="group" aria-label="Photo strip style">
+              <button class="booth-style-option is-active" type="button" data-style="kawaii" aria-pressed="true">
+                <span class="booth-style-swatch booth-style-swatch-kawaii" aria-hidden="true"></span>
+                <span class="booth-style-name">Simple</span>
+              </button>
+              <button class="booth-style-option" type="button" data-style="polkadot" aria-pressed="false">
+                <span class="booth-style-swatch booth-style-swatch-polkadot" aria-hidden="true"></span>
+                <span class="booth-style-name">Polka Dot</span>
+              </button>
+              <button class="booth-style-option" type="button" data-style="pastelpink" aria-pressed="false">
+                <span class="booth-style-swatch booth-style-swatch-pastelpink" aria-hidden="true"></span>
+                <span class="booth-style-name">Pastel Pink</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="booth-controls" id="booth-controls">
+            <button class="booth-btn booth-btn-primary" id="btn-start" type="button">Open Camera</button>
+          </div>
+
+          <p class="booth-hint" id="booth-hint" hidden></p>
+        </div>
+        <p class="booth-error" id="booth-error" hidden role="alert"></p>
+      </section>
+    </div>
+  </main>
+
+  <script src="script.js?v=20260808-page"></script>
+  <script src="photobooth.js?v=20260830-star"></script>
+</body>
+</html>

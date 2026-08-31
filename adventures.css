@@ -1,0 +1,357 @@
+/* ============================================================
+   Adventures — table of contents
+   ============================================================ */
+
+.adventures-body {
+  min-height: 100vh;
+  background: linear-gradient(170deg, var(--color-bg) 0%, var(--color-bg-alt) 55%, color-mix(in srgb, var(--color-accent-soft) 40%, var(--color-bg)) 100%);
+}
+
+.adventures-main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 7rem 1.5rem 4rem;
+}
+
+.adventures-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.adventures-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-accent);
+  margin-bottom: 0.35rem;
+}
+
+.adventures-title {
+  font-family: var(--font-caveat);
+  font-size: clamp(2.6rem, 7vw, 3.6rem);
+  color: var(--color-title);
+  line-height: 1.05;
+  margin-bottom: 0.35rem;
+}
+
+.adventures-subtitle {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text-light);
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+}
+
+.adventures-toc-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.adventures-toc-link {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 1.15rem 1.25rem;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(120, 90, 140, 0.08);
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
+}
+
+.adventures-toc-link:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+  box-shadow: 0 10px 28px rgba(120, 90, 140, 0.14);
+}
+
+.adventures-toc-num {
+  font-family: var(--font-caveat);
+  font-size: 1.5rem;
+  color: var(--color-accent);
+  min-width: 2rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.adventures-toc-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.adventures-toc-name {
+  font-family: 'Playpen Sans', var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-title);
+}
+
+.adventures-toc-desc {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+}
+
+.adventures-toc-arrow {
+  font-size: 1.1rem;
+  color: var(--color-accent);
+  flex-shrink: 0;
+  transition: transform 0.25s var(--ease-out);
+}
+
+.adventures-toc-link:hover .adventures-toc-arrow {
+  transform: translateX(4px);
+}
+
+.garage-back {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.garage-back:hover {
+  text-decoration: underline;
+}
+
+.garage-main {
+  max-width: 680px;
+  padding-top: 5.25rem;
+  padding-bottom: 1rem;
+}
+
+.garage-main .adventures-header {
+  margin-bottom: 0.6rem;
+}
+
+.garage-main .adventures-title {
+  font-size: clamp(1.75rem, 5vw, 2.35rem);
+  margin-bottom: 0.15rem;
+}
+
+.garage-main .adventures-subtitle {
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-size: 0.8rem;
+}
+
+.garage-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.garage-vehicle {
+  display: grid;
+  grid-template-columns: 6.25rem 1fr;
+  column-gap: 0.75rem;
+  align-items: stretch;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.65rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(120, 90, 140, 0.06);
+}
+
+.garage-vehicle-photo {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0.35rem 0 0.35rem 0.4rem;
+  background: transparent;
+  min-height: 0;
+}
+
+.garage-vehicle-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+.garage-vehicle-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5rem 0.7rem 0.5rem 0;
+  min-width: 0;
+}
+
+.garage-vehicle-header {
+  margin-bottom: 0.3rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.garage-vehicle-name {
+  font-family: 'Playpen Sans', var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-title);
+  margin-bottom: 0.05rem;
+  line-height: 1.2;
+}
+
+.garage-vehicle-tagline {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  color: var(--color-text-light);
+}
+
+.garage-specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.22rem 0.5rem;
+}
+
+.garage-spec dt {
+  font-family: var(--font-body);
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 0.02rem;
+}
+
+.garage-spec dd {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--color-text);
+  line-height: 1.25;
+}
+
+.garage-spec dd a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.garage-spec dd a:hover {
+  text-decoration: underline;
+}
+
+.workspace-main {
+  max-width: 820px;
+}
+
+.workspace-main .garage-grid {
+  gap: 0.75rem;
+}
+
+.workspace-build {
+  grid-template-columns: 11rem 1fr;
+  column-gap: 1rem;
+  border-radius: 0.85rem;
+  min-height: 12rem;
+}
+
+.workspace-build-photo {
+  padding: 0.6rem 0 0.6rem 0.6rem;
+}
+
+.workspace-build-photo img {
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 0.45rem;
+}
+
+.workspace-laptop,
+.workspace-ipad,
+.workspace-camera,
+.workspace-phone {
+  min-height: 12rem;
+  grid-template-columns: 11rem 1fr;
+  align-items: stretch;
+}
+
+.workspace-device-photo {
+  padding: 0.6rem 0 0.6rem 0.6rem;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.workspace-device-photo img {
+  width: 112%;
+  max-width: 112%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  background: none;
+  border-radius: 0.45rem;
+}
+
+.workspace-phone .workspace-device-photo img {
+  width: 112%;
+  max-width: 112%;
+  height: auto;
+  transform: scale(2.35);
+  transform-origin: center center;
+}
+
+.workspace-camera .workspace-device-photo img {
+  width: 100%;
+  max-width: 100%;
+}
+
+.workspace-laptop .garage-vehicle-info {
+  padding: 0.85rem 1rem 0.85rem 0;
+}
+
+.workspace-build .garage-vehicle-info {
+  padding: 0.85rem 1rem 0.85rem 0;
+}
+
+.workspace-build .garage-vehicle-name {
+  font-size: 1.15rem;
+}
+
+.workspace-build .garage-vehicle-header {
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.35rem;
+}
+
+.workspace-build .garage-spec dt {
+  font-size: 0.72rem;
+}
+
+.workspace-build .garage-spec dd {
+  font-size: 0.92rem;
+}
+
+.workspace-build .garage-specs {
+  gap: 0.35rem 0.75rem;
+}
+
+@media (max-width: 600px) {
+  .adventures-main {
+    padding-top: 6rem;
+  }
+
+  .adventures-toc-link {
+    gap: 0.85rem;
+    padding: 1rem;
+  }
+
+  .garage-vehicle {
+    grid-template-columns: 5.5rem 1fr;
+    column-gap: 0.6rem;
+  }
+
+  .workspace-build {
+    grid-template-columns: 8.5rem 1fr;
+    min-height: 10rem;
+  }
+
+  .workspace-laptop,
+  .workspace-ipad,
+  .workspace-camera,
+  .workspace-phone {
+    grid-template-columns: 8.5rem 1fr;
+  }
+}
