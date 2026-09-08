@@ -232,16 +232,34 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 5.5rem 1.25rem 3rem;
+  padding: 6.5rem 1.25rem 3rem;
   gap: 1.35rem;
 }
 
 .scrapbook-back {
-  align-self: flex-start;
-  width: 100%;
-  max-width: min(960px, 100%);
-  margin: 0 auto -0.25rem;
-  padding-left: 2.75rem;
+  position: absolute;
+  top: 5rem;
+  left: max(1rem, calc(50% - min(48vw, 640px) - 4rem));
+  z-index: 5;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  max-width: none;
+}
+
+.scrapbook-back .garage-back {
+  color: var(--paper-ink);
+  background: color-mix(in srgb, var(--paper-ivory) 92%, white);
+  border: 1.5px solid color-mix(in srgb, var(--paper-brown) 70%, transparent);
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.45rem 1rem;
+  box-shadow: 0 4px 14px rgba(92, 70, 55, 0.12);
+}
+
+.scrapbook-back .garage-back:hover {
+  border-color: #C9A8B8;
+  color: #9A6F88;
 }
 
 .scrapbook-stage {
@@ -681,7 +699,9 @@
 
 @media (max-width: 768px) {
   .scrapbook-back {
-    padding-left: 0.25rem;
+    position: static;
+    align-self: flex-start;
+    margin-bottom: 0.5rem;
   }
 
   .scrapbook-stage {
