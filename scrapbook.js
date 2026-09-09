@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closedEnd = current === maxIndex;
     book.classList.toggle('is-closed-start', closedStart);
     book.classList.toggle('is-closed-end', closedEnd);
+    book.classList.toggle('is-inside-cover', current === 1);
     book.style.setProperty(
       '--book-shift',
       closedStart ? '-25%' : closedEnd ? '25%' : '0%'
