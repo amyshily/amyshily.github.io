@@ -1,5 +1,6 @@
 /* ============================================================
-   Scrapbook page flip — open-book turn
+   Scrapbook page flip — open-book turn (desktop)
+   Single-page faces on narrow screens so collages stay readable
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,32 +15,106 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const FLIP_MS = 650;
+  const PASS_MS = 280;
+  const SINGLE_MQ = window.matchMedia('(max-width: 900px)');
+
+  const faces = [];
+  pages.forEach((page, pageIndex) => {
+    faces.push({ pageIndex, side: 'front' });
+    const back = page.querySelector('.page-back');
+    if (!back) return;
+    const meaningful = back.querySelector('img, .bookplate, .blank-cover, .blank-end');
+    if (meaningful) {
+      faces.push({ pageIndex, side: 'back' });
+    }
+  });
+
+  let singlePage = SINGLE_MQ.matches;
   let current = 0;
   let isAnimating = false;
-  const maxIndex = pages.length;
+
+  const maxIndex = () => (singlePage ? faces.length - 1 : pages.length);
+
+  const faceToSheet = (faceIndex) => {
+    const face = faces[faceIndex];
+    if (!face) return 0;
+    return face.side === 'back' ? face.pageIndex + 1 : face.pageIndex;
+  };
+
+  const sheetToFace = (sheetIndex) => {
+    if (sheetIndex >= pages.length) {
+      return faces.length - 1;
+    }
+    const idx = faces.findIndex(
+      (face) => face.pageIndex === sheetIndex && face.side === 'front'
+    );
+    return idx === -1 ? 0 : idx;
+  };
 
   const setZIndexes = () => {
+    if (singlePage) {
+      const face = faces[current] || faces[0];
+      pages.forEach((page, index) => {
+        const flipped =
+          index < face.pageIndex || (index === face.pageIndex && face.side === 'back');
+        page.classList.toggle('flipped', flipped);
+        page.classList.toggle('is-passed', index < face.pageIndex);
+        page.classList.toggle('is-top', index === face.pageIndex);
+        page.style.zIndex = String(
+          index === face.pageIndex ? pages.length + 2 : pages.length - index
+        );
+      });
+      return;
+    }
+
     pages.forEach((page, index) => {
       const flipped = page.classList.contains('flipped');
-      // Turning page gets priority via CSS; keep stacks ordered otherwise.
+      page.classList.remove('is-passed');
       page.style.zIndex = String(flipped ? index + 1 : pages.length - index);
       page.classList.toggle('is-top', index === current);
     });
   };
 
+  const rebuildDots = () => {
+    if (!dotsContainer) return;
+    dotsContainer.replaceChildren();
+    const last = maxIndex();
+    for (let i = 0; i <= last; i += 1) {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'scrapbook-dot';
+      dot.setAttribute('role', 'tab');
+      let label = `Page ${i + 1}`;
+      if (i === 0) label = 'Front cover';
+      if (i === last) label = 'Back cover';
+      dot.setAttribute('aria-label', label);
+      dot.addEventListener('click', (event) => {
+        event.stopPropagation();
+        goTo(i);
+      });
+      dotsContainer.appendChild(dot);
+    }
+  };
+
   const updateChrome = () => {
+    const last = maxIndex();
     const closedStart = current === 0;
-    const closedEnd = current === maxIndex;
+    const closedEnd = current === last;
+    book.classList.toggle('is-single-page', singlePage);
     book.classList.toggle('is-closed-start', closedStart);
     book.classList.toggle('is-closed-end', closedEnd);
-    book.classList.toggle('is-inside-cover', current === 1);
-    book.style.setProperty(
-      '--book-shift',
-      closedStart ? '-25%' : closedEnd ? '25%' : '0%'
-    );
+    book.classList.toggle('is-inside-cover', !singlePage && current === 1);
+    if (singlePage) {
+      book.style.setProperty('--book-shift', '0%');
+    } else {
+      book.style.setProperty(
+        '--book-shift',
+        closedStart ? '-25%' : closedEnd ? '25%' : '0%'
+      );
+    }
 
     if (prevBtn) prevBtn.disabled = current === 0 || isAnimating;
-    if (nextBtn) nextBtn.disabled = current === maxIndex || isAnimating;
+    if (nextBtn) nextBtn.disabled = current === last || isAnimating;
     if (dotsContainer) {
       dotsContainer.querySelectorAll('.scrapbook-dot').forEach((dot, index) => {
         dot.classList.toggle('active', index === current);
@@ -56,14 +131,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Keep shift + flip in sync (same CSS duration) for a clean open/close.
-      if (forward && fromIndex === 0) {
-        book.classList.remove('is-closed-start');
-        book.style.setProperty('--book-shift', '0%');
-      }
-      if (!forward && fromIndex === pages.length - 1) {
-        book.classList.remove('is-closed-end');
-        book.style.setProperty('--book-shift', '0%');
+      if (!singlePage) {
+        if (forward && fromIndex === 0) {
+          book.classList.remove('is-closed-start');
+          book.style.setProperty('--book-shift', '0%');
+        }
+        if (!forward && fromIndex === pages.length - 1) {
+          book.classList.remove('is-closed-end');
+          book.style.setProperty('--book-shift', '0%');
+        }
       }
 
       page.classList.add('is-turning');
@@ -83,14 +159,50 @@ document.addEventListener('DOMContentLoaded', () => {
       }, FLIP_MS);
     });
 
+  const turnFace = (fromIndex, toIndex) => {
+    const fromFace = faces[fromIndex];
+    const toFace = faces[toIndex];
+    if (!fromFace || !toFace) {
+      return Promise.resolve();
+    }
+
+    if (fromFace.pageIndex === toFace.pageIndex) {
+      return turnOne(fromFace.pageIndex, toIndex > fromIndex);
+    }
+
+    return new Promise((resolve) => {
+      const face = toFace;
+      pages.forEach((page, index) => {
+        const flipped =
+          index < face.pageIndex || (index === face.pageIndex && face.side === 'back');
+        page.classList.toggle('flipped', flipped);
+        page.classList.toggle('is-passed', index < face.pageIndex);
+        page.classList.toggle('is-top', index === face.pageIndex);
+        page.style.zIndex = String(
+          index === face.pageIndex ? pages.length + 2 : pages.length - index
+        );
+      });
+      window.setTimeout(resolve, PASS_MS);
+    });
+  };
+
   const goTo = async (target) => {
-    const clamped = Math.max(0, Math.min(maxIndex, target));
+    const last = maxIndex();
+    const clamped = Math.max(0, Math.min(last, target));
     if (clamped === current || isAnimating) return;
 
     isAnimating = true;
     updateChrome();
 
-    if (clamped > current) {
+    if (singlePage) {
+      const step = clamped > current ? 1 : -1;
+      while (current !== clamped) {
+        await turnFace(current, current + step);
+        current += step;
+        setZIndexes();
+        updateChrome();
+      }
+    } else if (clamped > current) {
       for (let i = current; i < clamped; i += 1) {
         await turnOne(i, true);
         current = i + 1;
@@ -111,23 +223,24 @@ document.addEventListener('DOMContentLoaded', () => {
     updateChrome();
   };
 
-  if (dotsContainer) {
-    for (let i = 0; i <= maxIndex; i += 1) {
-      const dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'scrapbook-dot';
-      dot.setAttribute('role', 'tab');
-      let label = `Page ${i + 1}`;
-      if (i === 0) label = 'Front cover';
-      if (i === maxIndex) label = 'Back cover';
-      dot.setAttribute('aria-label', label);
-      dot.addEventListener('click', (event) => {
-        event.stopPropagation();
-        goTo(i);
-      });
-      dotsContainer.appendChild(dot);
+  const applyMode = (nextSingle, remap) => {
+    if (remap) {
+      current = nextSingle ? sheetToFace(current) : faceToSheet(current);
     }
-  }
+    singlePage = nextSingle;
+    pages.forEach((page) => {
+      page.classList.remove('is-turning');
+      if (!singlePage) page.classList.remove('is-passed');
+    });
+    if (!singlePage) {
+      pages.forEach((page, index) => {
+        page.classList.toggle('flipped', index < current);
+      });
+    }
+    rebuildDots();
+    setZIndexes();
+    updateChrome();
+  };
 
   prevBtn?.addEventListener('click', () => goTo(current - 1));
   nextBtn?.addEventListener('click', () => goTo(current + 1));
@@ -136,8 +249,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (event.target.closest('a, button')) return;
     const rect = book.getBoundingClientRect();
     const clickX = event.clientX - rect.left;
+    const last = maxIndex();
 
-    if (current === 0 || current === maxIndex) {
+    if (!singlePage && (current === 0 || current === last)) {
       goTo(current === 0 ? current + 1 : current - 1);
       return;
     }
@@ -180,6 +294,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  setZIndexes();
-  updateChrome();
+  const onModeChange = (event) => {
+    if (event.matches === singlePage) return;
+    isAnimating = false;
+    applyMode(event.matches, true);
+  };
+
+  if (typeof SINGLE_MQ.addEventListener === 'function') {
+    SINGLE_MQ.addEventListener('change', onModeChange);
+  } else if (typeof SINGLE_MQ.addListener === 'function') {
+    SINGLE_MQ.addListener(onModeChange);
+  }
+
+  applyMode(singlePage, false);
 });

@@ -170,6 +170,10 @@
   box-shadow: 0 6px 18px rgba(120, 90, 140, 0.08);
 }
 
+.garage-main .garage-vehicle {
+  min-height: calc((16rem - 0.85rem) * 4 / 3 + 1.5rem + 2px);
+}
+
 .garage-vehicle-photo {
   display: flex;
   align-items: stretch;
@@ -185,6 +189,15 @@
   object-fit: contain;
   object-position: center;
   display: block;
+}
+
+.garage-main .garage-vehicle-photo {
+  align-items: center;
+}
+
+.garage-main .garage-vehicle-photo img {
+  height: auto;
+  max-height: 100%;
 }
 
 .garage-vehicle-info {
@@ -355,6 +368,10 @@
 
   .garage-vehicle {
     grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .garage-main .garage-vehicle {
     min-height: 0;
   }
 

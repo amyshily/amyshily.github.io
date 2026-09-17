@@ -225,15 +225,24 @@
 }
 
 .scrapbook-main {
+  --cover-ratio: 1.2946; /* 1024 / 791 page art */
+  --side-chrome: 8.5rem;
+  --vert-chrome: 9.75rem;
+  --page-w: min(
+    640px,
+    calc((100vw - var(--side-chrome)) / 2),
+    calc((100dvh - var(--vert-chrome)) * var(--cover-ratio))
+  );
+  --page-h: calc(var(--page-w) / var(--cover-ratio));
   position: relative;
   z-index: 1;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 6.5rem 1.25rem 3rem;
-  gap: 1.35rem;
+  padding: 5.75rem clamp(0.75rem, 2vw, 1.25rem) 1.5rem;
+  gap: 1rem;
 }
 
 .scrapbook-back {
@@ -268,19 +277,16 @@
   align-items: center;
   justify-content: center;
   justify-items: center;
-  column-gap: clamp(0.75rem, 2vw, 1.5rem);
+  column-gap: clamp(0.5rem, 1.6vw, 1.5rem);
   perspective: 2600px;
   perspective-origin: 50% 50%;
-  width: 100%;
+  width: min(100%, calc(var(--page-w) * 2 + 8.5rem));
 }
 
 .scrapbook-book-frame {
-  --cover-ratio: 1.2946; /* 1024 / 791 cover image */
-  --page-w: min(640px, 55vw);
-  --page-h: calc(var(--page-w) / var(--cover-ratio));
   width: calc(var(--page-w) * 2);
   height: var(--page-h);
-  max-width: calc(100vw - 6rem);
+  max-width: 100%;
   border-radius: 10px;
   overflow: visible;
   filter: drop-shadow(0 18px 32px var(--book-shadow));
@@ -445,7 +451,9 @@
   transform-origin: left center;
   transform-style: preserve-3d;
   transform: rotateY(0deg) translateZ(0);
-  transition: transform var(--flip-duration) var(--flip-ease);
+  transition:
+    transform var(--flip-duration) var(--flip-ease),
+    opacity 0.28s ease;
   cursor: url("images/custom-cursor-64.png") 32 32, pointer;
   pointer-events: none;
   will-change: transform;
@@ -767,8 +775,11 @@
 
 .scrapbook-dots {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 0.45rem;
+  max-width: min(100%, 28rem);
+  padding: 0 0.35rem;
 }
 
 .scrapbook-dot {
@@ -798,26 +809,178 @@
   }
 }
 
-@media (max-width: 768px) {
+/* One page at a time so collages stay readable on phones and portrait tablets */
+.scrapbook-book.is-single-page {
+  --book-shift: 0%;
+  transform: none;
+}
+
+.scrapbook-book.is-single-page .book-base-left,
+.scrapbook-book.is-single-page .scrapbook-spine {
+  display: none;
+}
+
+.scrapbook-book.is-single-page .book-base-right {
+  width: 100%;
+  right: 0;
+  left: 0;
+  border-radius: 10px;
+  border: 1px solid var(--page-edge);
+}
+
+.scrapbook-book.is-single-page .scrapbook-page {
+  width: 100%;
+  right: 0;
+  transform-origin: left center;
+}
+
+.scrapbook-book.is-single-page .scrapbook-page.is-passed {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scrapbook-book.is-single-page .page-front,
+.scrapbook-book.is-single-page .page-back {
+  border-radius: 10px;
+  border: 1px solid var(--page-edge);
+}
+
+.scrapbook-book.is-single-page.is-closed-start .scrapbook-page[data-page="0"] .page-front,
+.scrapbook-book.is-single-page.is-closed-end .scrapbook-page.flipped:last-child .page-back {
+  border-radius: 10px;
+}
+
+.scrapbook-book.is-single-page .page-front::before,
+.scrapbook-book.is-single-page .page-back::before {
+  opacity: 0.45;
+}
+
+@media (max-width: 900px) {
+  .scrapbook-main {
+    --side-chrome: 1.5rem;
+    --vert-chrome: 11.5rem;
+    --page-w: min(
+      calc(100vw - 1.5rem),
+      calc((100dvh - var(--vert-chrome)) * var(--cover-ratio))
+    );
+    justify-content: flex-start;
+    padding: 5.15rem 0.75rem 1.15rem;
+    gap: 0.75rem;
+  }
+
   .scrapbook-back {
     position: static;
     align-self: flex-start;
-    margin-bottom: 0.5rem;
+    margin: 0 0 0.15rem;
   }
 
   .scrapbook-stage {
-    grid-template-columns: 2.35rem minmax(0, auto) 2.35rem;
-    column-gap: 0.45rem;
+    width: 100%;
+    max-width: min(
+      100%,
+      calc((100dvh - var(--vert-chrome)) * var(--cover-ratio))
+    );
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: auto auto;
+    row-gap: 0.7rem;
+    column-gap: 0.65rem;
+    perspective: 1600px;
   }
 
   .scrapbook-book-frame {
-    --page-w: min(200px, 44vw);
-    --page-h: calc(var(--page-w) / var(--cover-ratio));
+    grid-column: 1 / -1;
+    grid-row: 1;
+    width: var(--page-w);
+    height: var(--page-h);
+    justify-self: center;
+  }
+
+  .scrapbook-book,
+  .scrapbook-book.is-closed-start,
+  .scrapbook-book.is-closed-end {
+    --book-shift: 0%;
+    transform: none;
+  }
+
+  .scrapbook-book .book-base-left,
+  .scrapbook-book .scrapbook-spine {
+    display: none;
+  }
+
+  .scrapbook-book .book-base-right {
+    width: 100%;
+    right: 0;
+    left: 0;
+    border-radius: 10px;
+    border: 1px solid var(--page-edge);
+  }
+
+  .scrapbook-page {
+    width: 100%;
+    right: 0;
+    transform-origin: left center;
+  }
+
+  .page-front,
+  .page-back {
+    border-radius: 10px;
+    border: 1px solid var(--page-edge);
+  }
+
+  .scrapbook-nav-prev {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: end;
+  }
+
+  .scrapbook-nav-next {
+    grid-column: 3;
+    grid-row: 2;
+    justify-self: start;
   }
 
   .scrapbook-nav {
-    width: 2.35rem;
-    height: 2.35rem;
-    font-size: 1.35rem;
+    width: 2.45rem;
+    height: 2.45rem;
+    font-size: 1.4rem;
+  }
+
+  .bookplate {
+    width: min(82%, 220px);
+    padding: 1.1rem 0.9rem 1rem;
+  }
+
+  .bookplate-tape {
+    width: 58px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .scrapbook-main {
+    --vert-chrome: 12.25rem;
+  }
+
+  .scrapbook-nav {
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: 1.25rem;
+  }
+
+  .scrapbook-dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .scrapbook-main {
+    --vert-chrome: 7.5rem;
+    padding-top: 4.6rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .scrapbook-back {
+    position: static;
   }
 }
