@@ -289,6 +289,7 @@
 .workspace-laptop,
 .workspace-ipad,
 .workspace-camera,
+.workspace-ixus,
 .workspace-phone {
   min-height: 12rem;
   grid-template-columns: 11rem 1fr;
@@ -322,7 +323,8 @@
   transform-origin: center center;
 }
 
-.workspace-camera .workspace-device-photo img {
+.workspace-camera .workspace-device-photo img,
+.workspace-ixus .workspace-device-photo img {
   width: 100%;
   max-width: 100%;
 }
@@ -392,6 +394,7 @@
   .workspace-laptop,
   .workspace-ipad,
   .workspace-camera,
+  .workspace-ixus,
   .workspace-phone {
     grid-template-columns: 8.5rem 1fr;
   }
