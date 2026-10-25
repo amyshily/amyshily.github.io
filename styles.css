@@ -641,45 +641,19 @@ ul {
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
   gap: 0.85rem 2rem;
   align-items: stretch;
 }
 
 .about-text {
   grid-column: 1;
-  grid-row: 1;
 }
 
 .about-lens {
   grid-column: 2;
-  grid-row: 1;
   display: flex;
   width: 100%;
   min-height: 0;
-}
-
-.about-ford {
-  grid-column: 1;
-  grid-row: 2;
-  display: flex;
-  width: 100%;
-}
-
-.about-headphones {
-  grid-column: 2;
-  grid-row: 2;
-  display: flex;
-  width: 100%;
-}
-
-.about-ford .highlight-card,
-.about-headphones .highlight-card {
-  flex: 1;
-  width: 100%;
-  align-items: center;
-  padding: 0.65rem 1rem;
-  gap: 0.65rem;
 }
 
 .about-grid .highlight-card {
@@ -687,15 +661,6 @@ ul {
   text-decoration: none;
   color: inherit;
   box-sizing: border-box;
-}
-
-.about-headphones .spotify-highlight {
-  min-height: 0;
-  align-items: center;
-}
-
-.about-ford .ford-highlight {
-  align-items: center;
 }
 
 .about-lens .lens-highlight {
@@ -781,81 +746,6 @@ ul {
   color: var(--color-text-light);
 }
 
-.ford-highlight {
-  --ford-purple: #C9B3E8;
-  --ford-purple-soft: #F1E9FB;
-  --click-accent: var(--ford-purple);
-  background: color-mix(in srgb, var(--ford-purple-soft) 88%, var(--color-surface));
-  border-color: color-mix(in srgb, var(--ford-purple) 60%, var(--color-border));
-}
-
-.ford-highlight:hover {
-  border-color: var(--ford-purple);
-  box-shadow:
-    inset 0 1px 0 rgba(252, 250, 255, 0.55),
-    0 10px 26px color-mix(in srgb, var(--ford-purple) 25%, transparent);
-}
-
-.ford-highlight-icon {
-  background: linear-gradient(135deg, var(--ford-purple), color-mix(in srgb, var(--ford-purple) 72%, var(--color-accent)));
-  box-shadow: 0 6px 18px color-mix(in srgb, var(--ford-purple) 24%, transparent);
-}
-
-.ford-highlight-icon svg {
-  color: #FCFAFF;
-}
-
-.ford-highlight .highlight-text h4 {
-  color: color-mix(in srgb, var(--ford-purple) 60%, var(--color-text));
-}
-
-:root[data-theme='dark'] .ford-highlight {
-  --ford-purple: #D0B8F0;
-  --ford-purple-soft: #3E3154;
-  background: color-mix(in srgb, var(--ford-purple-soft) 78%, var(--color-surface));
-  border-color: color-mix(in srgb, var(--ford-purple) 44%, var(--color-border));
-}
-
-:root[data-theme='dark'] .ford-highlight .highlight-text h4 {
-  color: color-mix(in srgb, var(--ford-purple) 78%, var(--color-text));
-}
-
-.spotify-highlight {
-  --spotify-green: #A8DDB5;
-  --spotify-green-soft: #EAF8EF;
-  --click-accent: var(--spotify-green);
-  position: relative;
-  align-items: center;
-  min-height: 96px;
-  background: color-mix(in srgb, var(--spotify-green-soft) 88%, var(--color-surface));
-  border-color: color-mix(in srgb, var(--spotify-green) 62%, var(--color-border));
-}
-
-.spotify-highlight:hover {
-  border-color: var(--spotify-green);
-  box-shadow:
-    inset 0 1px 0 rgba(252, 250, 255, 0.55),
-    0 10px 26px color-mix(in srgb, var(--spotify-green) 25%, transparent);
-}
-
-.spotify-highlight-icon {
-  background: linear-gradient(135deg, var(--spotify-green), color-mix(in srgb, var(--spotify-green) 72%, var(--color-accent)));
-  box-shadow: 0 6px 18px color-mix(in srgb, var(--spotify-green) 24%, transparent);
-}
-
-.spotify-highlight-icon svg {
-  color: #FCFAFF;
-}
-
-.spotify-highlight .highlight-text h4 {
-  color: color-mix(in srgb, var(--spotify-green) 58%, var(--color-text));
-}
-
-.spotify-highlight .highlight-text p {
-  font-size: 0.82rem;
-  line-height: 1.35;
-}
-
 .highlight-click {
   display: inline-block;
   padding: 0.12rem 0.55rem;
@@ -865,17 +755,6 @@ ul {
   font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-}
-
-:root[data-theme='dark'] .spotify-highlight {
-  --spotify-green: #A8DDB5;
-  --spotify-green-soft: #2E493A;
-  background: color-mix(in srgb, var(--spotify-green-soft) 78%, var(--color-surface));
-  border-color: color-mix(in srgb, var(--spotify-green) 42%, var(--color-border));
-}
-
-:root[data-theme='dark'] .spotify-highlight .highlight-text h4 {
-  color: color-mix(in srgb, var(--spotify-green) 78%, var(--color-text));
 }
 
 .scrapbook-highlight {
@@ -1619,11 +1498,8 @@ ul {
   }
 
   .about-text,
-  .about-lens,
-  .about-ford,
-  .about-headphones {
+  .about-lens {
     grid-column: 1;
-    grid-row: auto;
   }
 
   /* Involvement */
