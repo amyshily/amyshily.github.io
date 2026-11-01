@@ -845,6 +845,7 @@ ul {
   position: absolute;
   top: 0.4rem;
   right: 0.4rem;
+  max-width: calc(100% - 0.8rem);
   margin: 0;
   padding: 0.18rem 0.42rem;
   font-size: 0.58rem;
